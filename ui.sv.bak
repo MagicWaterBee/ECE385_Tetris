@@ -1,0 +1,15 @@
+module ui (	
+				input [9:0] DrawX, DrawY,
+				output [2:0] Color_UI
+	);
+	
+	always_comb
+	begin
+		if (DrawX<=10'd214 && DrawX>=10'd210 && DrawY<=10'd451 && DrawY>=10'd30)
+			Color_UI = 3'd111;
+		else
+			Color_UI = 3'd000;
+	end
+	
+endmodule
+			

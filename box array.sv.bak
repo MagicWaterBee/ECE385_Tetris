@@ -1,0 +1,6 @@
+module box_array(
+						output array [24][10]
+					)
+					
+					
+endmodule

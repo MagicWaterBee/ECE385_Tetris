@@ -1,0 +1,43 @@
+module total_dynamic (	input [2:0] Color_O_Block,
+								input	En_O,
+								input [3:0][4:0] New_Static_Row_O,
+								input [3:0][3:0] New_Static_Column_O,
+								
+								output En_New_Static,
+								output [2:0] Color_Dynamic,
+								output [3:0][4:0] New_Static_Row,
+								output [3:0][3:0] New_Static_Column
+	);
+	
+	
+	assign En_New_Static = En_O;
+	
+	always_comb
+	begin
+		if (En_O)
+		begin
+			Color_Dynamic = Color_O_Block;
+			New_Static_Row[0] = New_Static_Row_O[0];
+			New_Static_Row[1] = New_Static_Row_O[1];
+			New_Static_Row[2] = New_Static_Row_O[2];
+			New_Static_Row[3] = New_Static_Row_O[3];
+			New_Static_Column[0] = New_Static_Column_O[0];
+			New_Static_Column[1] = New_Static_Column_O[1];
+			New_Static_Column[2] = New_Static_Column_O[2];
+			New_Static_Column[3] = New_Static_Column_O[3];
+		end
+		else
+		begin
+			Color_Dynamic = 3'b000;
+			New_Static_Row[0] = 5'd0;
+			New_Static_Row[0] = 5'd0;
+			New_Static_Row[0] = 5'd0;
+			New_Static_Row[0] = 5'd0;
+			New_Static_Column[0] = 4'd0;
+			New_Static_Column[0] = 4'd0;
+			New_Static_Column[0] = 4'd0;
+			New_Static_Column[0] = 4'd0;
+		end
+	end
+	
+endmodule

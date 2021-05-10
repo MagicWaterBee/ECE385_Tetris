@@ -1,0 +1,15 @@
+module music (input logic  Clk,
+				  input logic  [15:0]Add,
+				  output logic [15:0]music_content);
+				  
+	logic [15:0] music_memory []
+	initial 
+	begin 
+		$readmemh(".txt",music_memory);
+	end
+	
+	always_ff @ (posedge Clk)
+		begin
+			music_content <= music_memory[Add];
+		end
+endmodule

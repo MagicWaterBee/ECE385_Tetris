@@ -1,0 +1,26 @@
+module frame_clk_generator (	input frame_clk,
+												Reset,
+										output frame_clk_out
+	);
+	
+	logic [6:0] counter;
+	logic frame_clk_out;
+	
+	always_ff @ (posedge frame_clk)
+	begin
+		if (Reset)
+			counter <= 7'd0;
+		else
+			counter <= counter+7'd1;
+	end
+	
+	always_comb
+	begin
+		if (counter <= 7'b1000000)
+			frame_clk_out = 1'b0;
+		else
+			frame_clk_out = 1'b1;
+	end
+	
+endmodule
+		

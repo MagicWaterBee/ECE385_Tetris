@@ -1,0 +1,45 @@
+module ActSignal (
+							input Clk,
+							input [7:0] keycode,
+							
+							output Active_O, Active_T, Active_RL, Active_RF, Active_LL, Active_LF, Active_I;
+	);
+	
+	logic [6:0] NUMKEY, NUMKEY_rising_edge, NUMKEY_clk_delayed;
+	
+   always_ff @ (posedge Clk) 
+	begin
+		NUMKEY_delayed <= NUMKEY;
+		Active_O <= (NUMKEY[0] == 1'b1) && (NUMKEY_delayed[0] == 1'b0);
+		Active_T <= (NUMKEY[1] == 1'b1) && (NUMKEY_delayed[1] == 1'b0);
+		Active_RL <= (NUMKEY[2] == 1'b1) && (NUMKEY_delayed[2] == 1'b0);
+		Active_RF <= (NUMKEY[3] == 1'b1) && (NUMKEY_delayed[3] == 1'b0);
+		Active_LL <= (NUMKEY[4] == 1'b1) && (NUMKEY_delayed[4] == 1'b0);
+		Active_LF <= (NUMKEY[5] == 1'b1) && (NUMKEY_delayed[5] == 1'b0);
+		Active_I <= (NUMKEY[6] == 1'b1) && (NUMKEY_delayed[6] == 1'b0);
+   end
+	
+	always_comb
+	begin
+		case (keycode[3:0])
+			4'h1E:
+				NUMKEY = 7'b1000000;
+			4'h1F:
+				NUMKEY = 7'b0100000;
+			4'h20:
+				NUMKEY = 7'b0010000;
+			4'h21:
+				NUMKEY = 7'b0001000;
+			4'h22:
+				NUMKEY = 7'b0000100;
+			4'h23:
+				NUMKEY = 7'b0000010;
+			4'h24:
+				NUMKEY = 7'b0000001;
+		endcase
+	end
+		
+endmodule
+
+			
+			

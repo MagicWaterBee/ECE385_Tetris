@@ -1,0 +1,89 @@
+module static_box_array(
+						input Reset,
+								Clk,
+								frame_clk,
+						input En_New_Static,
+						input [3:0][4:0] New_Static_Row,
+						input [3:0][3:0] New_Static_Column,
+						input [2:0] New_Static_Color,
+						input [9:0] DrawX, DrawY,
+						output [2:0] Color_Static
+	);
+
+	logic [23:0][9:0][2:0]	Color_Array;
+	logic [9:0][9:0]	Box_X_Center;
+	logic [19:0][9:0]	Box_Y_Center;
+	
+	parameter [9:0]	Box_size = 10'd10;
+	parameter [9:0]	Box_Y_Max = 10'd450;
+	parameter [9:0]	Box_Y_Min = 10'd31;
+	parameter [9:0]	Box_X_Max = 10'd424;
+	parameter [9:0]	Box_X_Min = 10'd215;
+	
+	assign Box_X_Center[0] = 10'd225;
+	assign Box_X_Center[1] = 10'd246;
+	assign Box_X_Center[2] = 10'd267;
+	assign Box_X_Center[3] = 10'd288;
+	assign Box_X_Center[4] = 10'd309;
+	assign Box_X_Center[5] = 10'd330;
+	assign Box_X_Center[6] = 10'd351;
+	assign Box_X_Center[7] = 10'd372;
+	assign Box_X_Center[8] = 10'd393;
+	assign Box_X_Center[9] = 10'd414;
+	
+	assign Box_Y_Center[0] = 10'd41;
+	assign Box_Y_Center[1] = 10'd62;
+	assign Box_Y_Center[2] = 10'd83;
+	assign Box_Y_Center[3] = 10'd104;
+	assign Box_Y_Center[4] = 10'd125;
+	assign Box_Y_Center[5] = 10'd146;
+	assign Box_Y_Center[6] = 10'd167;
+	assign Box_Y_Center[7] = 10'd188;
+	assign Box_Y_Center[8] = 10'd209;
+	assign Box_Y_Center[9] = 10'd230;
+	assign Box_Y_Center[10] = 10'd251;
+	assign Box_Y_Center[11] = 10'd272;
+	assign Box_Y_Center[12] = 10'd293;
+	assign Box_Y_Center[13] = 10'd314;
+	assign Box_Y_Center[14] = 10'd335;
+	assign Box_Y_Center[15] = 10'd356;
+	assign Box_Y_Center[16] = 10'd377;
+	assign Box_Y_Center[17] = 10'd398;
+	assign Box_Y_Center[18] = 10'd419;
+	assign Box_Y_Center[19] = 10'd440;
+	
+	logic frame_clk_delayed, frame_clk_rising_edge;
+	always_ff @ (posedge Clk) begin
+		frame_clk_delayed <= frame_clk;
+		frame_clk_rising_edge <= (frame_clk == 1'b1) && (frame_clk_delayed == 1'b0);
+	end
+	
+	always_ff @ (posedge Clk)
+	begin
+		if (Reset)
+		begin
+			for (int i=0; i<24; i++)
+				Color_Array[i][9:0] <= 3'b000;
+		end
+		else if (En_New_Static == 1'b1)
+		begin
+			Color_Array[New_Static_Row[0]][New_Static_Column[0]] <= New_Static_Color;
+			Color_Array[New_Static_Row[1]][New_Static_Column[1]] <= New_Static_Color;
+			Color_Array[New_Static_Row[2]][New_Static_Column[2]] <= New_Static_Color;
+			Color_Array[New_Static_Row[3]][New_Static_Column[3]] <= New_Static_Color;
+		end
+	end
+			
+	int Row,Column;
+	assign Row = (DrawY-10'd31)/10'd21;
+	assign Column = (DrawX-10'd215)/10'd21;
+	
+	always_comb
+	begin
+		if (Row>=10'd0 && Row<=10'd19 && Column>=10'd0 && Column<=10'd9)
+			Color_Static = Color_Array[Row][Column];
+		else
+			Color_Static = 3'b000;		
+	end
+		
+endmodule

@@ -1,0 +1,23 @@
+module rng (
+				input Clk,
+				input Reset,
+				output [2:0] randnum
+	);
+	
+	always_ff @ (posedge Clk)
+	begin
+		if (Reset)
+			randnum <= 3'b111;
+		else if (load)
+			randnum <= seed;
+		else
+		begin
+			randnum[2] <= randnum[1];
+			randnum[1] <= randnum[0]^randnum[2];
+			randnum[0] <= randnum[2];
+		end
+	end
+	
+endmodule
+				
+				

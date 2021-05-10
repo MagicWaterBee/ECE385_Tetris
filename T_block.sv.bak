@@ -1,0 +1,12 @@
+module T_block ( input Active,
+							  Clk,
+							  frame_clk,
+					  input [2:0] Color_Static,
+					  input [9:0] DrawX, DrawY,
+					  output En_New_Static,
+					  output [3:0][4:0] New_Static_Row,
+					  output [3:0][3:0] New_Static_Column,
+					  output Color_Dynamic
+	);
+
+	parameter Block_Center_ 

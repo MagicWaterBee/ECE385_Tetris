@@ -1,0 +1,33 @@
+module auto ( input clk, Reset, 
+				  input LDATA, RDATA, AUD_BCLK,
+				  input INIT
+				  input INIT_FINISH
+				  output 
+
+);
+
+logic State ;
+
+always_ff @ (posedge Clk)
+	begin
+		if (frame_clk_rising_edge)
+			case (State)
+				FINISH:
+				begin
+					
+				end
+				
+				INITIATE:
+					if (INIT)
+					begin
+						
+					end
+				
+				HALT: ;
+				default: ;
+			endcase
+	if State 
+
+
+endmodule
+
